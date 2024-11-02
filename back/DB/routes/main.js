@@ -31,24 +31,18 @@ router.post('/', async (req, res) => {
     const valid = ajv.validate(Schema, { name, password });
     if (valid) {
         const newUser = await User.create({ name, password });
-        console.log('User added:', newUser); 
-        res.cookie('name', name, {
+        res.cookie('psevdoSessionID', name, {
             maxAge: 99999999,
             httpOnly: true,
             sameSite: 'Strict',
             secure: false 
         });
-        console.log('Cookie set for user:', name);
-        
+        console.log('added!');
+        return res.json({ message: 'User created' }); 
     } else {
         console.log('Validation errors:', ajv.errors);
-        res.json({ errors: ajv.errors });
+        return res.status(400).json({ errors: ajv.errors }); 
     }
-});
-
-
-router.get('/users', async (req, res) => {
-    
 });
 
 export default router;

@@ -21,6 +21,11 @@ export default function Home() {
     const response = await axios.post('http://localhost:4000/', formData, {withCredentials: true});
     console.log(response.data);
   }
+
+  useEffect(() => {
+    axios.get('/').then(console.log);
+  }, []);
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
